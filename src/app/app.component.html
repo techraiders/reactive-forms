@@ -11,13 +11,23 @@
               class="form-control"
               formControlName="username"
             />
-            <span
+            <div
               *ngIf="
                 signupForm.get('userData.username').invalid &&
                 signupForm.get('userData.username').touched
               "
-              >Please enter a valid username</span
             >
+              <div
+                *ngIf="
+                  signupForm.get('userData.username').errors.nameIsForbidden
+                "
+              >
+                This name is forbidden
+              </div>
+              <div *ngIf="signupForm.get('userData.username').errors.required">
+                user name is required
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="email">email</label>
@@ -46,16 +56,24 @@
 
         <div formArrayName="hobbies">
           <h4>Your Hobbies</h4>
-          <button class="btn btn-default" type="button" (click)="onAddHobby()">Add Hobby</button>
-          <div class="form-group" *ngFor="let hobby of signupForm.get('hobbies').controls; let i = index;">
-            <input type="text" class="form-control" [formControlName]="i">
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">
+            Add Hobby
+          </button>
+          <div
+            class="form-group"
+            *ngFor="
+              let hobby of signupForm.get('hobbies').controls;
+              let i = index
+            "
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
           </div>
         </div>
 
         <div *ngIf="signupForm.invalid && signupForm.touched">
           Please enter valid data.
         </div>
-        <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
   </div>
