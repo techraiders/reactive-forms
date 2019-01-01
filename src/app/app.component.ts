@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 export class AppComponent implements OnInit {
   genders = ["male", "female"];
   signupForm: FormGroup;
-  forbiddenUsernames = ['Cheris', 'Anna'];
+  forbiddenUsernames = ["Cheris", "Anna"];
 
   ngOnInit() {
     try {
@@ -21,55 +21,57 @@ export class AppComponent implements OnInit {
             Validators.pattern(/[a-z]/),
             this.forbiddenName.bind(this)
           ]),
-          email: new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails)
+          email: new FormControl(
+            null,
+            [Validators.required, Validators.email],
+            this.forbiddenEmails
+          )
         }),
         gender: new FormControl("male"),
-        hobbies: new FormArray([
-
-        ])
+        hobbies: new FormArray([])
       });
-    } catch (err) {
 
-    }
+      /** You can also react to valueChanges on each indivisual form control as well as entire form value changes */
+      this.signupForm.valueChanges.subscribe(value => console.log(value));
+      this.signupForm.statusChanges.subscribe(status => console.log(status));
+    } catch (err) {}
   }
 
-  onAddHobby () {
+  onAddHobby() {
     try {
       const control = new FormControl(null, Validators.required);
-      (<FormArray>this.signupForm.get('hobbies')).push(control);
-    } catch (err) {
-
-    }
+      (<FormArray>this.signupForm.get("hobbies")).push(control);
+    } catch (err) {}
   }
 
-  forbiddenName (control: FormControl) : {[s: string]: boolean} {
+  forbiddenName(control: FormControl): { [s: string]: boolean } {
     try {
-      if (this.forbiddenUsernames.map(name => name.toLowerCase()).includes(control.value)) {
-        return {'nameIsForbidden': true};
+      if (
+        this.forbiddenUsernames
+          .map(name => name.toLowerCase())
+          .includes(control.value)
+      ) {
+        return { nameIsForbidden: true };
       } else {
         /** Either return or nothing here, don't return false */
         return null;
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
-  forbiddenEmails (control: FormControl) : Promise<any> | Observable<any> {
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
     try {
       const promise = new Promise<any>((resolve, reject) => {
         setTimeout(() => {
-          if (control.value === 'test@test.com') {
-            resolve({emailIsForbidden: true})
+          if (control.value === "test@test.com") {
+            resolve({ emailIsForbidden: true });
           } else {
             resolve(null);
           }
         }, 1500);
       });
       return promise;
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   }
 
   onSubmit() {
