@@ -34,6 +34,15 @@ export class AppComponent implements OnInit {
       /** You can also react to valueChanges on each indivisual form control as well as entire form value changes */
       this.signupForm.valueChanges.subscribe(value => console.log(value));
       this.signupForm.statusChanges.subscribe(status => console.log(status));
+
+      this.signupForm.setValue({
+        userData: {
+          name: 'max',
+          email: 'max@test.com'
+        },
+        gender: 'male',
+        hobbies: []
+      });
     } catch (err) {}
   }
 
