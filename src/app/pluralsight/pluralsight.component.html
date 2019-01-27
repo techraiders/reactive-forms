@@ -1,0 +1,18 @@
+<form [formGroup]="customerForm">
+  <legend>Pluralsight Reactive Forms Using Form Builder</legend>
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="firstName" />
+  </div>
+
+  <div class="form-check">
+    <label class="form-check-label">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        value="true"
+        formControlName="sendCatalog"
+      />
+      Send me your catalog
+    </label>
+  </div>
+</form>

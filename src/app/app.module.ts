@@ -4,10 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { PluralsightComponent } from './pluralsight/pluralsight.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PluralsightComponent
   ],
   imports: [
     BrowserModule,
