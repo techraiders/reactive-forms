@@ -6,6 +6,19 @@ import {
   ValidatorFn
 } from "@angular/forms";
 
+/**
+ * Cross field validator
+ */
+function emailMatcher(c: AbstractControl): { [key: string]: boolean } {
+  const emailControl = c.get("email");
+  const confirmEmail = c.get("confirmEmail");
+  if (emailControl.dirty && confirmEmail.dirty) {
+    if (emailControl.value !== confirmEmail.value) {
+      return { match: true };
+    }
+  }
+}
+
 function ratingRange({ min, max }): ValidatorFn {
   return (c: AbstractControl): { [key: string]: boolean } | null => {
     if (min && max) {
@@ -35,7 +48,13 @@ export class PluralsightComponent implements OnInit {
     this.customerForm = this.fb.group({
       firstName: ["", [Validators.required, Validators.minLength(3)]],
       lastName: ["", [Validators.required, Validators.maxLength(50)]],
-      email: ["", [Validators.required, Validators.email]],
+      emailGroup: this.fb.group(
+        {
+          email: ["", [Validators.required, Validators.email]],
+          confirmEmail: ["", [Validators.required]]
+        },
+        { validator: emailMatcher }
+      ),
       phone: "",
       notification: "email",
       rating: [null, [ratingRange({ min: 1, max: 5 })]],

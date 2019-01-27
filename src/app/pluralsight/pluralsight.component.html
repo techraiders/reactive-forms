@@ -20,26 +20,44 @@
     />
   </div>
 
-  <div class="form-group">
-    <input
-      type="text"
-      class="form-control"
-      aria-describedby="email"
-      placeholder="Email"
-      formControlName="email"
-    />
+  <div formGroupName="emailGroup">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="email"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <small
+        *ngIf="customerForm.get('emailGroup.email').hasError('required')"
+        id="email"
+        class="form-text text-muted"
+        >Email is required.</small
+      >
+      <small
+        *ngIf="customerForm.get('emailGroup.email').hasError('email')"
+        id="email"
+        class="form-text text-muted"
+        >Email is invalid.</small
+      >
+    </div>
+
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        aria-describedby="confirmEmail"
+        placeholder="Confirm Email"
+        formControlName="confirmEmail"
+      />
+    </div>
     <small
-      *ngIf="customerForm.get('email').hasError('required')"
-      id="email"
       class="form-text text-muted"
-      >Email is required.</small
+      *ngIf="customerForm.get('emailGroup').hasError('match')"
     >
-    <small
-      *ngIf="customerForm.get('email').hasError('email')"
-      id="email"
-      class="form-text text-muted"
-      >Email is invalid.</small
-    >
+      Email didn't match.
+    </small>
   </div>
 
   <div class="form-group">
