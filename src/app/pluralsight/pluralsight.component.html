@@ -98,5 +98,22 @@
     </label>
   </div>
 
+  <div class="form-group">
+    <input
+      type="number"
+      class="form-control"
+      aria-describedby="Rating"
+      placeholder="Rating"
+      formControlName="rating"
+    />
+    <small
+      id="helpId"
+      *ngIf="customerForm.get('rating').hasError('range')"
+      class="form-text text-muted"
+    >
+      Please rate your experience from 1 to 5.
+    </small>
+  </div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

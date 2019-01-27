@@ -1,5 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, AbstractControl } from "@angular/forms";
+
+function ratingRange(c: AbstractControl): { [key: string]: boolean } | null {
+  if (c.value && (isNaN(c.value) || c.value < 1 || c.value > 5)) {
+    return { range: true };
+  }
+  return null;
+}
 
 @Component({
   selector: "app-pluralsight",
@@ -23,6 +30,7 @@ export class PluralsightComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       phone: "",
       notification: "email",
+      rating: [null, [ratingRange]],
       sendCatalog: [true]
     });
   }
